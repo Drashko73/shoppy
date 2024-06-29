@@ -3,7 +3,6 @@ package shoppyapp.services;
 import shoppyapp.beans.UserBean;
 import shoppyapp.entities.User;
 import shoppyapp.repositories.UserRepository;
-import shoppyapp.util.LoggerUtil;
 import shoppyapp.util.PasswordUtil;
 
 import java.util.Optional;
@@ -102,8 +101,26 @@ public class UserService {
       return userRepository.findByUsername(username).isPresent();
     }
 
-    public Optional<User> getUserBySessionId(String sessionId) {
-      return userRepository.findBySessionID(sessionId);
+    public Optional<UserBean> getUserBySessionId(String sessionId) {
+      Optional<User> userOptional = userRepository.findBySessionID(sessionId);
+      if(userOptional.isPresent()) {
+        User user = userOptional.get();
+        return Optional.of(
+                new UserBean(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getEmail(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.isAdmin(),
+                        user.isBanned(),
+                        user.getSessionID()
+                )
+        );
+      }
+
+      return Optional.empty();
     }
 
     public Optional<UserBean> getUserById(Long userId) {

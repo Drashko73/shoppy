@@ -1,11 +1,3 @@
-<%@ page import="shoppyapp.beans.UserBean" %><%--
-  Created by IntelliJ IDEA.
-  User: radov
-  Date: 26-Jun-24
-  Time: 1:47 PM
-  To change this template use File | Settings | File Templates.
---%>
-
 <%
     if (session.getAttribute("user") != null) {
         response.sendRedirect("index.jsp");
@@ -24,52 +16,13 @@
     <link rel="icon" type="image/png" href="assets/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="styles/login.css">
-    <link rel="stylesheet" type="text/css" href="styles/index-style.css"> <!-- Added for "logo-and-links" styling -->
+    <link rel="stylesheet" type="text/css" href="styles/navbar.css">
 
     <script src="scripts/login.js" defer></script>
 </head>
 <body>
 
-    <nav id="navbar">
-        <!-- Navigation bar content -->
-        <!-- logo, links, cart, login, register -->
-        <div id="logo-and-links">
-            <div id="logo">
-                <a href="index.jsp">
-                    <img src="assets/logo.jpg" alt="Shoppy Logo" width="100px" height="30px">
-                </a>
-            </div>
-
-            <div id="links">
-                <!-- If user is admin, display Categories and Products link -->
-                <!-- If user is not admin, do not display Categories link -->
-                <%
-                    if (session.getAttribute("user") != null) {
-                        if (((UserBean) session.getAttribute("user")).isAdmin()) {
-                        %>
-                            <a href="products.jsp">Products</a>
-                            <a href="categories.jsp">Categories</a>
-                            <a href="chat_rooms.jsp">Manage Chat Rooms</a>
-                        <%
-                        }
-                        %>
-                        <a href="orders.jsp">Orders</a>
-                        <a href="cart.jsp">Cart</a>
-                        <a href="chat.jsp">Chat Rooms</a>
-                        <%
-                    }
-                %>
-                <a href="help.jsp">Help</a>
-            </div>
-        </div>
-
-        <div id="account-management">
-            <div id="login">
-                <a href="login.jsp">Login/Register</a>
-            </div>
-        </div>
-
-    </nav>
+    <%@ include file="navbar.jsp"%>
 
     <div id="login-container">
         <div class="container" id="container">

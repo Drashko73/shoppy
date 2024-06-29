@@ -3,9 +3,8 @@ package shoppyapp.socket;
 import jakarta.websocket.HandshakeResponse;
 import jakarta.websocket.server.HandshakeRequest;
 import jakarta.websocket.server.ServerEndpointConfig;
-import shoppyapp.entities.User;
+import shoppyapp.beans.UserBean;
 import shoppyapp.services.UserService;
-import shoppyapp.util.LoggerUtil;
 
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class ChatServerConfigurator extends ServerEndpointConfig.Configurator {
     // Get user property from the request
     Map<String, Object> userProperties = sec.getUserProperties();
     String sessionId = request.getParameterMap().get("sessionId").get(0);
-    User user = userService.getUserBySessionId(sessionId).orElse(null);
+    UserBean user = userService.getUserBySessionId(sessionId).orElse(null);
 
     if(user != null) {
       userProperties.put("user", user);

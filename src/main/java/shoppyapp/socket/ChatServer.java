@@ -2,8 +2,7 @@ package shoppyapp.socket;
 
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
-import shoppyapp.entities.ChatMessage;
-import shoppyapp.entities.User;
+import shoppyapp.beans.UserBean;
 import shoppyapp.services.ChatService;
 import shoppyapp.services.UserService;
 import shoppyapp.util.LoggerUtil;
@@ -51,7 +50,7 @@ public class ChatServer {
     String chatroom = session.getPathParameters().get("chatroom");
 
     // Get the user from the session
-    User user = (User) session.getUserProperties().get("user");
+    UserBean user = (UserBean) session.getUserProperties().get("user");
 
     if(user == null) {
 //      LoggerUtil.logMessage("User not found in session: " + session.getId());
