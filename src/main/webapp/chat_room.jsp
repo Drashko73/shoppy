@@ -65,6 +65,7 @@
     <link rel="icon" type="image/png" href="assets/favicon.ico">
 
     <link rel="stylesheet" href="styles/chat_room.css">
+    <link rel="stylesheet" href="styles/navbar.css">
 
     <script src="scripts/account-modal.js" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
