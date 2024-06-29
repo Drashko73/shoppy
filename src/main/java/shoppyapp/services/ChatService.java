@@ -127,6 +127,11 @@ public class ChatService {
     return false;
   }
 
+  // Get number of messages in a chat room
+  public int getChatRoomMessagesCount(Long chatRoomId) {
+    return chatMessageRepository.findByChatRoomId(chatRoomId).size();
+  }
+
   // Close the chat service
   public void close() {
     chatRoomRepository.close();

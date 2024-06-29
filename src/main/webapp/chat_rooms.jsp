@@ -137,6 +137,17 @@
             <li class="chat-room-item">
                 <div>
                     <h3 class="chat-room-name"><%= room.getName() %></h3>
+                    <p>
+                        <%
+                            int numberOfMessages = chatService.getChatRoomMessagesCount(room.getId());
+
+                            // Format the number of messages if they are more than 1000
+                            String formattedNumberOfMessages = numberOfMessages > 1000 ?
+                                    String.format("%.1fK", (double) numberOfMessages / 1000) :
+                                    String.valueOf(numberOfMessages);
+                        %>
+                        Total number of messages: <%= formattedNumberOfMessages %>
+                    </p>
                 </div>
                 <div>
                     <p style="text-align: justify"><%= room.getDescription() %></p>
