@@ -20,6 +20,8 @@ function preparePage() {
         sessionStorage.setItem('selectedCategory', selectedCategory);
     }
 
+    document.getElementById("filterbycategory_" + selectedCategory).classList.add('selected-category');
+
     getPageCount(selectedCategory);
     loadProducts(currentPage, selectedCategory);
 }

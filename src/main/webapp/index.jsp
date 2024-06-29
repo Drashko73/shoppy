@@ -38,7 +38,7 @@
       <h2>Categories</h2>
 
       <ul>
-          <li class="selected-category" id="filterbycategory_0" onclick="filterByCategoryHandler(this.id)">
+          <li id="filterbycategory_0" onclick="filterByCategoryHandler(this.id)">
             <span>All</span>
           </li>
           <%
