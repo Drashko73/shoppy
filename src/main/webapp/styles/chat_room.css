@@ -58,19 +58,22 @@ body {
     text-align: center;
 }
 
-/* General styling for chat messages container */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 50px);
+}
+
 .chat-messages {
-    max-width: 800px;
-    margin: 0 auto;
+    flex: 1;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    height: 400px;
 }
 
-/* Styling for each message */
 .message {
     display: flex;
     align-items: flex-start;
@@ -90,16 +93,15 @@ body {
 }
 
 .message.received {
-    flex-direction: row-reverse;
     background-color: white;
     margin-right: auto;
+    flex-direction: row-reverse;
 }
 
-.message:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+/*.message:hover {*/
+/*    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);*/
+/*}*/
 
-/* Styling for user avatar */
 .avatar {
     width: 50px;
     height: 50px;
@@ -107,12 +109,10 @@ body {
     margin: 0 15px;
 }
 
-/* Styling for message content */
 .message-content {
     flex: 1;
 }
 
-/* Styling for message header */
 .message-header {
     display: flex;
     justify-content: space-between;
@@ -135,19 +135,16 @@ body {
     margin-right: 10px;
 }
 
-/* Styling for username */
 .username {
     font-weight: bold;
     color: #333;
 }
 
-/* Styling for timestamp */
 .timestamp {
     font-size: 12px;
     color: #999;
 }
 
-/* Styling for message text */
 .message-text {
     font-size: 14px;
     color: #555;
@@ -157,12 +154,38 @@ body {
     color: #004d40;
 }
 
-/* Responsive design for smaller screens */
-@media (max-width: 600px) {
-    .chat-messages {
-        padding: 15px;
-    }
+.message-form {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    position: relative;
+}
 
+.message-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.send-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.send-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
     .message {
         padding: 8px;
         max-width: 90%;
@@ -192,4 +215,12 @@ body {
     .timestamp {
         margin-top: 5px;
     }
+}
+
+#room-name {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
 }
