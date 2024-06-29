@@ -7,4 +7,6 @@ Done:
 * **JSP** - Used to create dynamic web pages
 * **Beans** - Used as a data carrier
 * **Web Socket** - Used to create a chat application
-* Test
+* **RMI** - Used to create a remote method invocation
+
+TO DO: Think about using RMI to get products from a remote server

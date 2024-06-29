@@ -2,6 +2,9 @@
 <%@ page import="shoppyapp.services.ChatService" %>
 <%@ page import="java.util.List" %>
 <%@ page import="shoppyapp.beans.ChatRoomBean" %>
+<%@ page import="shoppyapp.rmi.IChatRoom" %>
+<%@ page import="java.rmi.Naming" %>
+<%@ page import="java.rmi.NotBoundException" %>
 
 <%
     if (session.getAttribute("user") != null && ((UserBean) session.getAttribute("user")).isAdmin()) {
@@ -9,6 +12,13 @@
     }
     else {
         response.sendRedirect("index.jsp");
+    }
+
+    IChatRoom chatRoom = null;
+    try {
+        chatRoom = (IChatRoom) Naming.lookup("rmi://localhost:10102/chatRoom");
+    } catch (NotBoundException e) {
+        throw new RuntimeException(e);
     }
 %>
 
@@ -53,7 +63,7 @@
                     <h3 class="chat-room-name"><%= room.getName() %></h3>
                     <p>
                         <%
-                            int numberOfMessages = chatService.getChatRoomMessagesCount(room.getId());
+                            int numberOfMessages = chatRoom.getMessageCount(room.getId());
 
                             // Format the number of messages if they are more than 1000
                             String formattedNumberOfMessages = numberOfMessages > 1000 ?
