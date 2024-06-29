@@ -8,11 +8,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import shoppyapp.beans.ProductBean;
 import shoppyapp.services.ProductService;
-import shoppyapp.util.LoggerUtil;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.List;
 
 @WebServlet(name = "ProductServlet", value = "/product_servlet")
 @MultipartConfig
@@ -192,6 +193,66 @@ public class ProductServlet extends HttpServlet {
           os.write(buffer, 0, bytesRead);
         }
       }
+    }
+    else if(action != null && action.equals("products")) {
+
+      int page;
+      int categoryId;
+
+      try {
+        page = Integer.parseInt(request.getParameter("page"));
+        categoryId = Integer.parseInt(request.getParameter("category_id"));
+      }
+      catch (Exception e) {
+        // Return empty list if page or category ID is not a number
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print("[]");
+        out.flush();
+        return;
+      }
+
+      List<ProductBean> products = productService.getProductsByPage(page, categoryId);
+
+      response.setContentType("application/json");
+      response.setCharacterEncoding("UTF-8");
+
+      PrintWriter out = response.getWriter();
+
+      // Convert the products to JSON and write it to the response
+      out.print("[");
+      for(ProductBean product : products) {
+        String imageName = product.getImage() != null ? product.getImage() : "no_image_123456789";
+        out.print(
+                "{\"id\":" + product.getId() + "," +
+                "\"name\":\"" + product.getName() + "\"," +
+                "\"price\":" + product.getPrice() + "," +
+                "\"stock\":" + product.getStock() + "," +
+                "\"description\":\"" + product.getDescription() + "\"," +
+                "\"image\":\"" + imageName + "\"," +
+                "\"category_id\":" + product.getCategoryId() + "}");
+        if(products.indexOf(product) != products.size() - 1) {
+          out.print(",");
+        }
+      }
+      out.print("]");
+      out.flush();
+
+    }
+    else if(action != null && action.equals("page_count")) {
+      int categoryId = Integer.parseInt(request.getParameter("category_id"));
+
+      int pageCount = productService.getTotalPagesByCategory(categoryId);
+
+      response.setContentType("application/json");
+      response.setCharacterEncoding("UTF-8");
+
+      PrintWriter out = response.getWriter();
+
+      // Return the page count as JSON
+      out.print("{\"page_count\":" + pageCount + "}"); // Return the page count as JSON
+      out.flush();
     }
   }
 

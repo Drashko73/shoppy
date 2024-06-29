@@ -5,12 +5,6 @@ import shoppyapp.entities.Category;
 import shoppyapp.entities.Product;
 import shoppyapp.repositories.CategoryRepository;
 import shoppyapp.repositories.ProductRepository;
-import shoppyapp.util.LoggerUtil;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +12,7 @@ import java.util.Optional;
 public class ProductService {
 
   private final ProductRepository productRepository;
+  private static final int ITEMS_PER_PAGE = 8;
 
   public ProductService() {
     this.productRepository = new ProductRepository();
@@ -29,7 +24,7 @@ public class ProductService {
     Optional<Category> categoryOptional = new CategoryRepository().findById(categoryId);
 
     // Check if the category is present
-    if(categoryOptional.isPresent()) {
+    if (categoryOptional.isPresent()) {
       // Get the category from the Optional
       Category category = categoryOptional.get();
 
@@ -37,12 +32,11 @@ public class ProductService {
       Optional<Product> productOptional = productRepository.findByName(name);
 
       // Check if the product is present
-      if(productOptional.isPresent()) {
+      if (productOptional.isPresent()) {
         // Log an error message
 //        LoggerUtil.logMessage("Product already exists");
         return false;
-      }
-      else {
+      } else {
         Product product = new Product(name, price, stock, description, imageName, category);
 
         // Save the product
@@ -50,8 +44,7 @@ public class ProductService {
         return true;
       }
 
-    }
-    else {
+    } else {
       // Log an error message
 //      LoggerUtil.logMessage("Category not found");
       return false;
@@ -65,7 +58,7 @@ public class ProductService {
     Optional<Category> categoryOptional = new CategoryRepository().findById(categoryId);
 
     // Check if the category is present
-    if(categoryOptional.isPresent()) {
+    if (categoryOptional.isPresent()) {
 
       // Get the category from the Optional
       Category category = categoryOptional.get();
@@ -74,7 +67,7 @@ public class ProductService {
       Optional<Product> productOptional = productRepository.findById(id);
 
       // Check if the product is present
-      if(productOptional.isPresent()) {
+      if (productOptional.isPresent()) {
 
         // Get the product from the Optional
         Product product = productOptional.get();
@@ -83,14 +76,14 @@ public class ProductService {
         Optional<Product> existingProduct = productRepository.findByName(name);
 
         // If the product already exists, and it is not the same as the product being updated, return false
-        if(existingProduct.isPresent() && existingProduct.get().getId() != id) {
+        if (existingProduct.isPresent() && existingProduct.get().getId() != id) {
           // Log an error message
 //          LoggerUtil.logMessage("Product already exists");
           return false;
         }
 
         // Check the stock of the product
-        if(stock < 0) {
+        if (stock < 0) {
           // Log an error message
 //          LoggerUtil.logMessage("Stock cannot be negative");
           return false;
@@ -101,7 +94,7 @@ public class ProductService {
         product.setPrice(price);
         product.setStock(stock);
         product.setDescription(description);
-        if(image == null && product.getImage() != null) {
+        if (image == null && product.getImage() != null) {
           image = product.getImage();
         }
         product.setImage(image);
@@ -110,15 +103,13 @@ public class ProductService {
         // Save the updated product
         productRepository.save(product);
         return true;
-      }
-      else {
+      } else {
         // Log an error message
 //        LoggerUtil.logMessage("Product not found");
         return false;
       }
 
-    }
-    else {
+    } else {
       // Log an error message
 //      LoggerUtil.logMessage("Category not found");
       return false;
@@ -132,19 +123,18 @@ public class ProductService {
     Optional<Product> productOptional = productRepository.findById(id);
 
     // Check if the product is present
-    if(productOptional.isPresent()) {
+    if (productOptional.isPresent()) {
       // Get the product from the Optional
       Product product = productOptional.get();
 
       // Delete the product
       boolean deleted = productRepository.delete(product);
-      if(deleted) {
+      if (deleted) {
         // Log a message if the product is deleted successfully
 //        LoggerUtil.logMessage("Product deleted with ID: " + id);
       }
       return deleted;
-    }
-    else {
+    } else {
       // Log a message if the product is not present
 //      LoggerUtil.logMessage("Product not found with ID: " + id);
       return false;
@@ -155,7 +145,7 @@ public class ProductService {
   public List<ProductBean> getAllProducts() {
     List<Product> products = productRepository.findAll();
     List<ProductBean> productBeans = new ArrayList<>();
-    for(Product product : products) {
+    for (Product product : products) {
       productBeans.add(new ProductBean(
               product.getId(),
               product.getName(),
@@ -175,7 +165,7 @@ public class ProductService {
     Optional<Product> productOptional = productRepository.findById(id);
 
     // Check if the product is present
-    if(productOptional.isPresent()) {
+    if (productOptional.isPresent()) {
       // Get the product from the Optional
       Product product = productOptional.get();
       return new ProductBean(
@@ -187,8 +177,7 @@ public class ProductService {
               product.getImage(),
               product.getCategory().getId()
       );
-    }
-    else {
+    } else {
       // Log an error message
 //      LoggerUtil.logMessage("Product not found with ID: " + id);
       return null;
@@ -200,12 +189,12 @@ public class ProductService {
     Optional<Product> productOptional = productRepository.findById(id);
 
     // Check if the product is present
-    if(productOptional.isPresent()) {
+    if (productOptional.isPresent()) {
       // Get the product from the Optional
       Product product = productOptional.get();
 
       // Check if the stock is negative
-      if(stock < 0) {
+      if (stock < 0) {
         // Log an error message
 //        LoggerUtil.logMessage("Stock cannot be negative");
         return false;
@@ -217,8 +206,7 @@ public class ProductService {
       // Save the updated product
       productRepository.save(product);
       return true;
-    }
-    else {
+    } else {
       // Log an error message
 //      LoggerUtil.logMessage("Product not found with ID: " + id);
       return false;
@@ -230,14 +218,14 @@ public class ProductService {
     Optional<Product> productOptional = productRepository.findById(id);
 
     // Check if the product is present
-    if(productOptional.isPresent()) {
+    if (productOptional.isPresent()) {
 //      LoggerUtil.logMessage("Product found with ID: " + id);
 
       // Get the product from the Optional
       Product product = productOptional.get();
 
       // Check if the stock is enough
-      if(product.getStock() < quantity) {
+      if (product.getStock() < quantity) {
         // Log an error message
 //        LoggerUtil.logMessage("Stock not enough");
         return false;
@@ -245,12 +233,51 @@ public class ProductService {
 //      LoggerUtil.logMessage("Stock enough");
 
       return true;
-    }
-    else {
+    } else {
       // Log an error message
 //      LoggerUtil.logMessage("Product not found with ID: " + id);
       return false;
     }
   }
+
+  public int getTotalPagesByCategory(int categoryId) {
+    int totalProducts = 0;
+    if(categoryId == 0){
+      totalProducts = productRepository.findAll().size();
+    }
+    else{
+      totalProducts = productRepository.findByCategory(categoryId).size();
+    }
+    return (int) Math.ceil((double) totalProducts / ITEMS_PER_PAGE);
+  }
+
+  public List<ProductBean> getProductsByPage(int page, int categoryId) {
+
+    List<Product> product = null;
+    if(categoryId == 0){
+      product = productRepository.findAll();
+    }
+    else{
+      product = productRepository.findByCategory(categoryId);
+    }
+
+    List<ProductBean> productBeans = new ArrayList<>();
+    for (int i = (page - 1) * ITEMS_PER_PAGE; i < Math.min(page * ITEMS_PER_PAGE, product.size()); i++) {
+      Product p = product.get(i);
+      productBeans.add(new ProductBean(
+              p.getId(),
+              p.getName(),
+              p.getPrice(),
+              p.getStock(),
+              p.getDescription(),
+              p.getImage(),
+              p.getCategory().getId())
+      );
+    }
+
+    return productBeans;
+
+  }
+
 
 }

@@ -58,42 +58,16 @@
     </aside>
 
     <section id="products">
-      <!-- Main window content -->
 
-      <h2>Products</h2>
-
-      <div class="product-grid">
-        <%
-          ProductService productService = new ProductService();
-          List<ProductBean> products = productService.getAllProducts();
-          for (ProductBean product : products) {
-          %>
-            <div class="product-item">
-              <div class="product-image-container">
-                <%
-                  if(product.getImage() == null) {
-                  %>
-                    <img draggable="false" class="product-image" src="assets/default-placeholder-product.png" alt="Product Image">
-                  <%
-                  }
-                  else {
-                  %>
-                    <img draggable="false" class="product-image" src="product_servlet?action=image&name=<%= product.getImage() %>" alt="Product Image">
-                  <%
-                  }
-                %>
-              </div>
-              <div class="product-details">
-                <h2 class="product-name"><%= product.getName() %></h2>
-                <p class="product-price">$<%= product.getPrice() %></p>
-                <a href="product_details.jsp?product_id=<%= product.getId() %>" class="product-link">View Details</a>
-                <input type="hidden" value="<%=product.getCategoryId()%>" class="cat-id-hidden">
-              </div>
-            </div>
-          <%
-          }
-        %>
+      <div id="pagination">
+        <button id="firstPage" onclick="firstPage()"> << </button>
+        <button id="prevPage" onclick="previousPage()"> < </button>
+        <span id="pageNumbers"></span>
+        <button id="nextPage" onclick="nextPage()"> > </button>
+        <button id="lastPage" onclick="lastPage()"> >> </button>
       </div>
+
+      <div id="product-grid"></div>
 
     </section>
   </div>
