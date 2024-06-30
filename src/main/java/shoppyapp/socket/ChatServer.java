@@ -44,7 +44,7 @@ public class ChatServer {
   @OnMessage
   public void onMessage(String message, Session session) {
 
-    LoggerUtil.logMessage("Message received: " + message);
+    // LoggerUtil.logMessage("Message received: " + message);
 
     // Get the chat room ID from the session
     String chatroom = session.getPathParameters().get("chatroom");

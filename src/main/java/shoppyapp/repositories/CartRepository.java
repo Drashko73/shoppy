@@ -3,7 +3,6 @@ package shoppyapp.repositories;
 import jakarta.persistence.EntityManager;
 import shoppyapp.entities.Cart;
 import shoppyapp.util.DbUtil;
-import shoppyapp.util.LoggerUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +53,9 @@ public class CartRepository {
       entityManager.getTransaction().commit();
     } catch (Exception e) {
 //      LoggerUtil.logMessage("Failed to save cart");
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
       e.printStackTrace();
     }
   }
@@ -69,7 +70,9 @@ public class CartRepository {
         entityManager.getTransaction().commit();
         return true;
       } catch (Exception e) {
-        entityManager.getTransaction().rollback();
+        if(entityManager.getTransaction().isActive()) {
+          entityManager.getTransaction().rollback();
+        }
       }
     }
     return false;
@@ -81,7 +84,9 @@ public class CartRepository {
       entityManager.createQuery("DELETE FROM Cart").executeUpdate();
       entityManager.getTransaction().commit();
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
     }
   }
 
@@ -94,7 +99,9 @@ public class CartRepository {
       entityManager.getTransaction().commit();
       return true;
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
     }
     return false;
   }
@@ -109,7 +116,9 @@ public class CartRepository {
       entityManager.getTransaction().commit();
       return true;
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
     }
     return false;
   }
@@ -125,7 +134,9 @@ public class CartRepository {
       entityManager.getTransaction().commit();
       return true;
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
     }
     return false;
   }
@@ -141,7 +152,9 @@ public class CartRepository {
       entityManager.getTransaction().commit();
       return true;
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
     }
     return false;
   }

@@ -323,7 +323,7 @@
         %>
     </div>
     <form id="messageForm" class="message-form">
-        <input type="text" id="messageInput" placeholder="Type your message..." class="message-input" maxlength="2000" spellcheck="false">
+        <input type="text" id="messageInput" placeholder="Type your message..." class="message-input" maxlength="2000" spellcheck="false" autocomplete="off">
         <button type="submit" class="send-button">Send</button>
     </form>
 </div>

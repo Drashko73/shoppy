@@ -51,7 +51,9 @@ public class ProductRepository {
       }
       entityManager.getTransaction().commit();
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
     }
   }
 
@@ -65,7 +67,9 @@ public class ProductRepository {
         entityManager.getTransaction().commit();
         return true;
       } catch (Exception e) {
-        entityManager.getTransaction().rollback();
+        if(entityManager.getTransaction().isActive()) {
+          entityManager.getTransaction().rollback();
+        }
       }
     }
     return false;
@@ -96,7 +100,9 @@ public class ProductRepository {
         entityManager.getTransaction().commit();
         return true;
       } catch (Exception e) {
-        entityManager.getTransaction().rollback();
+        if(entityManager.getTransaction().isActive()) {
+          entityManager.getTransaction().rollback();
+        }
       }
     }
     entityManager.clear();  // Clear the entity manager to avoid conflicts

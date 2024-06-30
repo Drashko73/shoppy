@@ -2,8 +2,6 @@
 <%@ page import="shoppyapp.beans.CategoryBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="shoppyapp.services.CategoryService" %>
-<%@ page import="shoppyapp.services.ProductService" %>
-<%@ page import="shoppyapp.beans.ProductBean" %>
 
 <%
     if (session.getAttribute("user") != null && ((UserBean) session.getAttribute("user")).isAdmin()) {
@@ -32,86 +30,32 @@
     <script src="scripts/products.js" defer></script>
 
 </head>
-<body>
+<body onload="preparePage()">
 
 <%@ include file="navbar.jsp"%>
 
 <!-- Side by side div with the left one containing created categories and the right one containing the form for creating a new category -->
 <div id="products-container">
-    <div id="products">
+    <div id="products" onscroll="scrollHandler()">
         <h2>Products</h2>
 
         <div id="search-div">
-            <input id="searchInput" type="text" name="searchTerm" placeholder="Search Products" spellcheck="false" onkeyup="filterProductsHandler()">
-
-            <select id="selectInput" onchange="filterProductsHandler()">
-                <option value="0">All Categories</option>
+            <select id="selectInput" onchange="categoryChangeHandler()">
+                <option id="category_option_0" value="0">All Categories</option>
                 <%
                     CategoryService categoryService = new CategoryService();
                     List<CategoryBean> categories = categoryService.getAllCategories();
                     for (CategoryBean category : categories) {
                     %>
-                        <option value="<%= category.getId() %>"><%= category.getName() %></option>
+                        <option id="category_option_<%=category.getId()%>" value="<%= category.getId() %>"><%= category.getName() %></option>
                     <%
                     }
                 %>
             </select>
-
         </div>
 
-        <ul>
-            <!-- Loop through all products and display them -->
-            <%
-                ProductService productService = new ProductService();
-
-                List<ProductBean> products = productService.getAllProducts();
-                for (ProductBean product : products) {
-            %>
-            <li class="product-item">
-                <div class="product-image-container">
-                    <%
-                        if (product.getImage() != null) {
-                    %>
-                    <img draggable="false" class="product-image" src="product_servlet?action=image&name=<%= product.getImage() %>">
-                    <%
-                    }
-                    else {
-                    %>
-                    <img draggable="false" class="product-image" src="assets/default-placeholder-product.png">
-                    <%
-                        }
-                    %>
-                </div>
-
-                <div class="product-details-container">
-                    <h3 class="product-name"><%= product.getName() %></h3>
-                    <p style="text-align: justify"><%= product.getDescription() %></p>
-                    <p>Price: $<%= product.getPrice() %></p>
-                    <p>Stock: <%= product.getStock() %></p>
-                    <input type="hidden" class="product-category" value="<%= product.getCategoryId() %>">
-                </div>
-
-                <div class="product-option">
-                    <button
-                            class="edit"
-                            data-id="<%= product.getId() %>"
-                            data-name="<%= product.getName() %>"
-                            data-price="<%= product.getPrice() %>"
-                            data-stock="<%= product.getStock() %>"
-                            data-description="<%= product.getDescription() %>"
-                            data-category="<%= product.getCategoryId() %>"
-                    >Edit</button>
-
-                    <form action="product_servlet" method="post">
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="id" value="<%= product.getId() %>">
-                        <button class="delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                    </form>
-                </div>
-            </li>
-            <%
-                }
-            %>
+        <ul id="products-ul">
+            <!-- Products will be here -->
         </ul>
     </div>
 

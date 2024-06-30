@@ -62,7 +62,9 @@ public class UserRepository {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+          if(entityManager.getTransaction().isActive()) {
+              entityManager.getTransaction().rollback();
+          }
         }
     }
 

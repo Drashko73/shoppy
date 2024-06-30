@@ -3,7 +3,6 @@ package shoppyapp.repositories;
 import jakarta.persistence.EntityManager;
 import shoppyapp.entities.Category;
 import shoppyapp.util.DbUtil;
-import shoppyapp.util.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,9 @@ public class CategoryRepository {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+          if(entityManager.getTransaction().isActive()) {
+              entityManager.getTransaction().rollback();
+          }
         }
     }
 
@@ -75,7 +76,9 @@ public class CategoryRepository {
             entityManager.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+          if(entityManager.getTransaction().isActive()) {
+              entityManager.getTransaction().rollback();
+          }
             return false;
         }
     }
@@ -95,7 +98,9 @@ public class CategoryRepository {
           entityManager.getTransaction().commit();
           return Optional.of(updatedCategory);
       } catch (Exception e) {
-          entityManager.getTransaction().rollback();
+        if(entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
           return Optional.empty();
       }
     }

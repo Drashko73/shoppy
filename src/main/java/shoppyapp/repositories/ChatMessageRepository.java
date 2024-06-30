@@ -47,7 +47,9 @@ public class ChatMessageRepository {
     }
     catch (Exception e) {
       if(entityManager.getTransaction().isActive()) {
-        entityManager.getTransaction().rollback();
+        if(entityManager.getTransaction().isActive()) {
+          entityManager.getTransaction().rollback();
+        }
       }
       LoggerUtil.logError("Error saving chat message: " + e.getMessage());
     }
@@ -66,7 +68,9 @@ public class ChatMessageRepository {
       }
       catch (Exception e) {
         if(entityManager.getTransaction().isActive()) {
-          entityManager.getTransaction().rollback();
+          if(entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+          }
         }
         LoggerUtil.logError("Error deleting chat message: " + e.getMessage());
       }

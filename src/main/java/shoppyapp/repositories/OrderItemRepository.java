@@ -20,7 +20,9 @@ public class OrderItemRepository {
       entityManager.persist(orderItem);
       entityManager.getTransaction().commit();
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
       LoggerUtil.logError(e.getMessage());
     }
   }
