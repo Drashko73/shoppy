@@ -16,8 +16,6 @@ body {
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 5px;
-    height: 80vh;
-    overflow-y: scroll;
 }
 
 #products h2 {
@@ -28,6 +26,9 @@ body {
 #products ul {
     list-style-type: none;
     padding: 0;
+    height: 70vh;
+    overflow-y: scroll;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* products list styling */

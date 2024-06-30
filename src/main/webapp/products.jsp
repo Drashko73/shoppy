@@ -36,9 +36,7 @@
 
 <!-- Side by side div with the left one containing created categories and the right one containing the form for creating a new category -->
 <div id="products-container">
-    <div id="products" onscroll="scrollHandler()">
-        <h2>Products</h2>
-
+    <div id="products">
         <div id="search-div">
             <select id="selectInput" onchange="categoryChangeHandler()">
                 <option id="category_option_0" value="0">All Categories</option>
@@ -54,7 +52,7 @@
             </select>
         </div>
 
-        <ul id="products-ul">
+        <ul id="products-ul" onscroll="scrollHandler()">
             <!-- Products will be here -->
         </ul>
     </div>

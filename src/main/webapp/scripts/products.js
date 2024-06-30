@@ -77,10 +77,9 @@ function categoryChangeHandler() {
 }
 
 function scrollHandler() {
-    const productsDiv = document.getElementById('products');
-
+    const productsDiv = document.getElementById('products-ul');
     // Check if the user has scrolled to the bottom of the page
-    if (productsDiv.scrollTop + productsDiv.clientHeight >= productsDiv.scrollHeight) {
+    if (productsDiv.scrollTop + productsDiv.clientHeight >= productsDiv.scrollHeight - 100) {
         // Load more products
         // loadMoreProducts();
 
