@@ -4,6 +4,7 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import shoppyapp.beans.UserBean;
+import shoppyapp.rmi.RMIServer;
 import shoppyapp.services.UserService;
 
 import java.util.Optional;
@@ -14,6 +15,7 @@ public class AppInitializer implements ServletContextListener {
   @Override
   public void contextInitialized(ServletContextEvent sce) {
     registerAdminUser();  // Register the admin user if it doesn't exist
+    RMIServer.main(new String[]{});  // Start the RMI server
   }
 
   @Override
