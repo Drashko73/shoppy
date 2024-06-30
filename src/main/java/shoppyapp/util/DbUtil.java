@@ -3,10 +3,11 @@ package shoppyapp.util;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import shoppyapp.config.Common;
 
 public class DbUtil {
 
-  private static final String PERSISTENCE_UNIT_NAME = "shoppy-pu";
+  private static final String PERSISTENCE_UNIT_NAME = Common.PERSISTENCE_UNIT_NAME;
   private static EntityManagerFactory factory;
 
   static {

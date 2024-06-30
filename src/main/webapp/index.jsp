@@ -1,5 +1,3 @@
-<%@ page import="shoppyapp.services.ProductService" %>
-<%@ page import="shoppyapp.beans.ProductBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="shoppyapp.services.CategoryService" %>
 <%@ page import="shoppyapp.beans.CategoryBean" %>

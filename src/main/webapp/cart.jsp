@@ -3,13 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="shoppyapp.beans.CartBean" %>
 <%@ page import="shoppyapp.services.ProductService" %>
-<%@ page import="shoppyapp.beans.ProductBean" %><%--
-  Created by IntelliJ IDEA.
-  User: radov
-  Date: 27-Jun-24
-  Time: 11:29 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="shoppyapp.beans.ProductBean" %>
 
 <%
     if (session.getAttribute("user") == null) {

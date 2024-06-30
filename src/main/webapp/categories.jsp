@@ -2,13 +2,6 @@
 <%@ page import="shoppyapp.beans.CategoryBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="shoppyapp.services.CategoryService" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: radov
-  Date: 26-Jun-24
-  Time: 11:23 PM
-  To change this template use File | Settings | File Templates.
---%>
 
 <%
     if (session.getAttribute("user") != null && ((UserBean) session.getAttribute("user")).isAdmin()) {

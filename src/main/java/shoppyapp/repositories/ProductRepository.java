@@ -50,10 +50,27 @@ public class ProductRepository {
         entityManager.merge(product);
       }
       entityManager.getTransaction().commit();
+
+      entityManager.clear();  // Clear the entity manager to avoid conflicts
+
     } catch (Exception e) {
       if(entityManager.getTransaction().isActive()) {
         entityManager.getTransaction().rollback();
       }
+    }
+  }
+
+  public boolean create(Product product) {
+    try {
+      entityManager.getTransaction().begin();
+      entityManager.persist(product);
+      entityManager.getTransaction().commit();
+      return true;
+    } catch (Exception e) {
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
+      return false;
     }
   }
 
@@ -75,6 +92,20 @@ public class ProductRepository {
     return false;
   }
 
+  public boolean update(Product product) {
+    try {
+      entityManager.getTransaction().begin();
+      entityManager.merge(product);
+      entityManager.getTransaction().commit();
+      return true;
+    } catch (Exception e) {
+      if(entityManager.getTransaction().isActive()) {
+        entityManager.getTransaction().rollback();
+      }
+      return false;
+    }
+  }
+
   public List<Product> findByCategory(int categoryId) {
     try {
       return entityManager.createQuery("SELECT p FROM Product p WHERE p.category.id = :categoryId", Product.class)
@@ -83,30 +114,6 @@ public class ProductRepository {
     } catch (Exception e) {
       return new ArrayList<>();
     }
-  }
-
-  public boolean updateProduct(Product product) {
-    Product productToUpdate = entityManager.find(Product.class, product.getId());
-    if (productToUpdate != null) {
-      try {
-        entityManager.getTransaction().begin();
-        productToUpdate.setName(product.getName());
-        productToUpdate.setPrice(product.getPrice());
-        productToUpdate.setStock(product.getStock());
-        productToUpdate.setDescription(product.getDescription());
-        productToUpdate.setImage(product.getImage());
-        productToUpdate.setCategory(product.getCategory());
-        entityManager.merge(productToUpdate);
-        entityManager.getTransaction().commit();
-        return true;
-      } catch (Exception e) {
-        if(entityManager.getTransaction().isActive()) {
-          entityManager.getTransaction().rollback();
-        }
-      }
-    }
-    entityManager.clear();  // Clear the entity manager to avoid conflicts
-    return false;
   }
 
 }

@@ -2,6 +2,13 @@ package shoppyapp.util;
 
 public class LoggerUtil {
 
+  /**
+   * Logs a given message to the console.
+   * The message is logged in the format: [INFO] message with the current timestamp and green color.
+   * This method is used for logging informational messages that are not errors.
+   *
+   * @param message The message to be logged.
+   */
   public static void logMessage(String message) {
 
     final String ANSI_RESET = "\u001B[0m";
@@ -15,6 +22,13 @@ public class LoggerUtil {
 
   }
 
+  /**
+   * Logs a given error message to the console.
+   * The message is logged in the format: [ERROR] message with the current timestamp and red color.
+   * This method is used for logging error messages.
+   *
+   * @param message The error message to be logged.
+   */
   public static void logError(String message) {
 
     final String ANSI_RESET = "\u001B[0m";

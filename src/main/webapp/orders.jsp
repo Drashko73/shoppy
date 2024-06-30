@@ -1,13 +1,7 @@
 <%@ page import="shoppyapp.beans.UserBean" %>
 <%@ page import="shoppyapp.services.OrderService" %>
 <%@ page import="shoppyapp.beans.OrderBean" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: radov
-  Date: 28-Jun-24
-  Time: 2:23 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
 
 <%
     if (session.getAttribute("user") == null) {

@@ -5,6 +5,7 @@
 <%@ page import="shoppyapp.rmi.IChatRoom" %>
 <%@ page import="java.rmi.Naming" %>
 <%@ page import="java.rmi.NotBoundException" %>
+<%@ page import="shoppyapp.config.Common" %>
 
 <%
     if (session.getAttribute("user") != null && ((UserBean) session.getAttribute("user")).isAdmin()) {
@@ -16,7 +17,7 @@
 
     IChatRoom chatRoom = null;
     try {
-        chatRoom = (IChatRoom) Naming.lookup("rmi://localhost:10102/chatRoom");
+        chatRoom = (IChatRoom) Naming.lookup(Common.getRmiServerUrl());
     } catch (NotBoundException e) {
         throw new RuntimeException(e);
     }

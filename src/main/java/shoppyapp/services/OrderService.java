@@ -31,19 +31,13 @@ public class OrderService {
 
   public boolean createOrder(List<OrderItem> orderItems, long userId) {
 
-//    LoggerUtil.logMessage("Number of order items: " + orderItems.size());
-
     // Check if the stock is enough
     if (!canCreateOrder(orderItems)) {
       return false;
     }
 
-//    LoggerUtil.logMessage("Products in stock");
-
     // Update the stock
     updateStock(orderItems);
-
-//    LoggerUtil.logMessage("Stock updated");
 
     // Create the order
     Date currentDate = new Date();
@@ -52,7 +46,6 @@ public class OrderService {
     // Get the user by its ID
     Optional<User> user = userRepository.findById(userId);
     if(user.isPresent()) {
-//      LoggerUtil.logMessage("User found");
 
       Order order = new Order(user.get(), currentDate, orderItems, total);
       orderRepository.addOrder(order);

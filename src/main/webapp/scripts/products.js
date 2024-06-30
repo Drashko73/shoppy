@@ -41,7 +41,6 @@ let selectedCategory = 0;
 let currentPage = 1;
 let totalPages = 1;
 
-const editModal = document.getElementById('editModal');
 const editId = document.getElementById('edit-id');
 const editName = document.getElementById('edit-name');
 const editPrice = document.getElementById('edit-price');
@@ -181,8 +180,6 @@ function displayProducts(products, clearPrevious = false) {
             editStock.value = product.stock;
             editDescription.value = product.description;
             editCategory.value = product.category_id;
-
-            editModal.style.display = 'block';
         }
 
 

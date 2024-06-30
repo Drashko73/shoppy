@@ -1,6 +1,7 @@
 package shoppyapp.services;
 
 import shoppyapp.beans.ProductBean;
+import shoppyapp.config.Common;
 import shoppyapp.entities.Category;
 import shoppyapp.entities.Product;
 import shoppyapp.repositories.CategoryRepository;
@@ -12,7 +13,7 @@ import java.util.Optional;
 public class ProductService {
 
   private final ProductRepository productRepository;
-  private static final int ITEMS_PER_PAGE = 8;
+  private static final int ITEMS_PER_PAGE = Common.NUMBER_OF_PRODUCTS_TO_SHOW;
 
   public ProductService() {
     this.productRepository = new ProductRepository();
@@ -39,9 +40,7 @@ public class ProductService {
       } else {
         Product product = new Product(name, price, stock, description, imageName, category);
 
-        // Save the product
-        productRepository.save(product);
-        return true;
+        return productRepository.create(product);
       }
 
     } else {
@@ -100,9 +99,8 @@ public class ProductService {
         product.setImage(image);
         product.setCategory(category);
 
-        // Save the updated product
-        productRepository.save(product);
-        return true;
+
+        return productRepository.update(product);
       } else {
         // Log an error message
 //        LoggerUtil.logMessage("Product not found");
@@ -253,17 +251,17 @@ public class ProductService {
 
   public List<ProductBean> getProductsByPage(int page, int categoryId) {
 
-    List<Product> product = null;
+    List<Product> products = null;
     if(categoryId == 0){
-      product = productRepository.findAll();
+      products = productRepository.findAll();
     }
     else{
-      product = productRepository.findByCategory(categoryId);
+      products = productRepository.findByCategory(categoryId);
     }
 
     List<ProductBean> productBeans = new ArrayList<>();
-    for (int i = (page - 1) * ITEMS_PER_PAGE; i < Math.min(page * ITEMS_PER_PAGE, product.size()); i++) {
-      Product p = product.get(i);
+    for (int i = (page - 1) * ITEMS_PER_PAGE; i < Math.min(page * ITEMS_PER_PAGE, products.size()); i++) {
+      Product p = products.get(i);
       productBeans.add(new ProductBean(
               p.getId(),
               p.getName(),

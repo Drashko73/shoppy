@@ -44,8 +44,6 @@ public class ChatServer {
   @OnMessage
   public void onMessage(String message, Session session) {
 
-    // LoggerUtil.logMessage("Message received: " + message);
-
     // Get the chat room ID from the session
     String chatroom = session.getPathParameters().get("chatroom");
 
@@ -53,7 +51,6 @@ public class ChatServer {
     UserBean user = (UserBean) session.getUserProperties().get("user");
 
     if(user == null) {
-//      LoggerUtil.logMessage("User not found in session: " + session.getId());
       return;
     }
 
@@ -90,7 +87,6 @@ public class ChatServer {
 
     counter--;
 
-//    LoggerUtil.logMessage("Connection closed to chat server: " + session.getId() + " in chatroom: " + chatroom);
   }
 
   @OnError

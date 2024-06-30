@@ -32,16 +32,6 @@ public class CartRepository {
     }
   }
 
-  public List<Cart> findAll() {
-    try {
-      return entityManager.createQuery("SELECT c FROM Cart c", Cart.class).getResultList();
-    } catch (Exception e) {
-      return List.of();
-    }
-  }
-
-
-
   public void save(Cart cart) {
     try {
       entityManager.getTransaction().begin();
@@ -78,73 +68,10 @@ public class CartRepository {
     return false;
   }
 
-  public void deleteAll() {
-    try {
-      entityManager.getTransaction().begin();
-      entityManager.createQuery("DELETE FROM Cart").executeUpdate();
-      entityManager.getTransaction().commit();
-    } catch (Exception e) {
-      if(entityManager.getTransaction().isActive()) {
-        entityManager.getTransaction().rollback();
-      }
-    }
-  }
-
-  public boolean emptyUserCart(int userId) {
-    try {
-      entityManager.getTransaction().begin();
-      entityManager.createQuery("DELETE FROM Cart c WHERE c.user.id = :userId")
-              .setParameter("userId", userId)
-              .executeUpdate();
-      entityManager.getTransaction().commit();
-      return true;
-    } catch (Exception e) {
-      if(entityManager.getTransaction().isActive()) {
-        entityManager.getTransaction().rollback();
-      }
-    }
-    return false;
-  }
-
-  public boolean deleteProductFromUserCart(int userId, int productId) {
-    try {
-      entityManager.getTransaction().begin();
-      entityManager.createQuery("DELETE FROM Cart c WHERE c.user.id = :userId AND c.product.id = :productId")
-              .setParameter("userId", userId)
-              .setParameter("productId", productId)
-              .executeUpdate();
-      entityManager.getTransaction().commit();
-      return true;
-    } catch (Exception e) {
-      if(entityManager.getTransaction().isActive()) {
-        entityManager.getTransaction().rollback();
-      }
-    }
-    return false;
-  }
-
   public boolean increaseProductQuantity(int userId, int productId, int quantity) {
     try {
       entityManager.getTransaction().begin();
       entityManager.createQuery("UPDATE Cart c SET c.quantity = c.quantity + :quantity WHERE c.user.id = :userId AND c.product.id = :productId")
-              .setParameter("quantity", quantity)
-              .setParameter("userId", userId)
-              .setParameter("productId", productId)
-              .executeUpdate();
-      entityManager.getTransaction().commit();
-      return true;
-    } catch (Exception e) {
-      if(entityManager.getTransaction().isActive()) {
-        entityManager.getTransaction().rollback();
-      }
-    }
-    return false;
-  }
-
-  public boolean decreaseProductQuantity(int userId, int productId, int quantity) {
-    try {
-      entityManager.getTransaction().begin();
-      entityManager.createQuery("UPDATE Cart c SET c.quantity = c.quantity - :quantity WHERE c.user.id = :userId AND c.product.id = :productId")
               .setParameter("quantity", quantity)
               .setParameter("userId", userId)
               .setParameter("productId", productId)

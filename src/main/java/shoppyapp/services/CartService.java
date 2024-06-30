@@ -7,9 +7,7 @@ import shoppyapp.entities.User;
 import shoppyapp.repositories.CartRepository;
 import shoppyapp.repositories.ProductRepository;
 import shoppyapp.repositories.UserRepository;
-import shoppyapp.util.LoggerUtil;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
