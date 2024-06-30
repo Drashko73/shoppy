@@ -94,7 +94,13 @@ public class OrderService {
 
     // Iterate over the order items to update the stock
     for (OrderItem orderItem : orderItems) {
-      productService.updateProductStock(orderItem.getProduct().getId(), orderItem.getProduct().getStock() - orderItem.getQuantity());
+      boolean updated = productService.updateProductStock(orderItem.getProduct().getId(), orderItem.getProduct().getStock() - orderItem.getQuantity());
+      if(!updated) {
+        LoggerUtil.logMessage("Failed to update stock for product: " + orderItem.getProduct().getId());
+      }
+      else {
+        LoggerUtil.logMessage("Stock updated for product: " + orderItem.getProduct().getId());
+      }
     }
   }
 

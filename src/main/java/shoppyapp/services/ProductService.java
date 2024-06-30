@@ -201,9 +201,7 @@ public class ProductService {
       // Update the stock of the product
       product.setStock(stock);
 
-      // Save the updated product
-      productRepository.save(product);
-      return true;
+      return productRepository.update(product);
     } else {
       // Log an error message
 //      LoggerUtil.logMessage("Product not found with ID: " + id);
