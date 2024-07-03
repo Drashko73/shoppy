@@ -1,6 +1,7 @@
 package shoppyapp.services;
 
 import shoppyapp.beans.OrderBean;
+import shoppyapp.beans.ProductBean;
 import shoppyapp.entities.Order;
 import shoppyapp.entities.OrderItem;
 import shoppyapp.entities.User;
@@ -94,7 +95,9 @@ public class OrderService {
 
     // Iterate over the order items to update the stock
     for (OrderItem orderItem : orderItems) {
-      boolean updated = productService.updateProductStock(orderItem.getProduct().getId(), orderItem.getProduct().getStock() - orderItem.getQuantity());
+
+      ProductBean productBean = productService.getProductById(orderItem.getProduct().getId());
+      boolean updated = productService.updateProductStock(productBean.getId(), productBean.getStock() - orderItem.getQuantity());
       if(!updated) {
         LoggerUtil.logMessage("Failed to update stock for product: " + orderItem.getProduct().getId());
       }

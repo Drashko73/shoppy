@@ -5,6 +5,11 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import shoppyapp.rmi.RMIServer;
 import shoppyapp.services.UserService;
+import shoppyapp.util.LoggerUtil;
+
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.util.Enumeration;
 
 @WebListener
 public class AppInitializer implements ServletContextListener {
@@ -23,6 +28,16 @@ public class AppInitializer implements ServletContextListener {
 
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
+    Enumeration<Driver> drivers = DriverManager.getDrivers();
+    while (drivers.hasMoreElements()) {
+      Driver driver = drivers.nextElement();
+      try {
+        DriverManager.deregisterDriver(driver);
+      } catch (Exception e) {
+        LoggerUtil.logError("Error unregistering driver: " + driver + " | " + e.getMessage());
+      }
+    }
+
   }
 
   private static void registerAdminUser() {
