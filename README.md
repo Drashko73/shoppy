@@ -8,5 +8,3 @@ Done:
 * **Beans** - Used as a data carrier
 * **Web Socket** - Used to create a chat application
 * **RMI** - Used to create a remote method invocation
-
-TO DO: Think about using RMI to get products from a remote server
